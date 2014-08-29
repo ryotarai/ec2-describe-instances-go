@@ -5,6 +5,18 @@ ec2-describe-instances-go
 $ ec2-describe-instances-go -r ap-northeast-1 | jq .
 ```
 
+Installation
+------------
+### Download built binary
+
+https://github.com/ryotarai/ec2-describe-instances-go/releases
+
+### or go get
+
+```
+$ go get github.com/ryotarai/ec2-describe-instances-go
+```
+
 v.s. aws-cli
 ------------
 
