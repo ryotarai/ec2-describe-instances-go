@@ -16,9 +16,9 @@ func main() {
 	flag.StringVar(&regionStr, "r", "us-east-1", "Region")
 	flag.Parse()
 
-	region := strToRegion(regionStr)
-	if region == nil {
-		log.Fatal(errors.New("Region " + regionStr + " is unknown."))
+	region, err := strToRegion(regionStr)
+	if err == nil {
+		log.Fatal(err)
 	}
 
 	auth, err := aws.EnvAuth()
@@ -46,25 +46,25 @@ func main() {
 	fmt.Printf("%s\n", b)
 }
 
-func strToRegion(str string) *aws.Region {
+func strToRegion(str string) (*aws.Region, error) {
 	switch str {
 	case "us-east-1":
-		return &aws.USEast
+		return &aws.USEast, nil
 	case "us-west-1":
-		return &aws.USWest
+		return &aws.USWest, nil
 	case "us-west-2":
-		return &aws.USWest2
+		return &aws.USWest2, nil
 	case "eu-west-1":
-		return &aws.EUWest
+		return &aws.EUWest, nil
 	case "ap-southeast-1":
-		return &aws.APSoutheast
+		return &aws.APSoutheast, nil
 	case "ap-southeast-2":
-		return &aws.APSoutheast2
+		return &aws.APSoutheast2, nil
 	case "ap-northeast-1":
-		return &aws.APNortheast
+		return &aws.APNortheast, nil
 	case "sa-east-1":
-		return &aws.SAEast
+		return &aws.SAEast, nil
+	default:
+		return nil, errors.New("Region " + str + " is unknown.")
 	}
-
-	return nil
 }
