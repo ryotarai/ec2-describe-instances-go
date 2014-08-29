@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"errors"
 	"flag"
 	"fmt"
 	"log"
@@ -16,9 +15,9 @@ func main() {
 	flag.StringVar(&regionStr, "r", "us-east-1", "Region")
 	flag.Parse()
 
-	region := aws.Regions[regionStr]
-	if region.Name == "" {
-		log.Fatal(errors.New("Region " + regionStr + " is unknown."))
+	region, ok := aws.Regions[regionStr]
+	if !ok {
+		log.Fatal(fmt.Errorf("Region %s is unknown.", regionStr))
 	}
 
 	auth, err := aws.EnvAuth()
